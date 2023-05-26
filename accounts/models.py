@@ -27,7 +27,7 @@ class User(AbstractUser):
     team = models.CharField(max_length=16, choices=team_list)
 
     USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['password', 'name', 'email']
+    REQUIRED_FIELDS = ['password', 'name', 'email', 'part', 'team']
 
     def __str__(self):
         return self.name
