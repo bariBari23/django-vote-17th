@@ -37,6 +37,7 @@ class UserSignupSerializer(serializers.Serializer):
         if User.objects.filter(username=validated_data['username']).exists() or User.objects.filter(email=validated_data['email']).exists():
             raise serializers.ValidationError('username 존재 or email 존재')
 
+
         else:
             user = User.objects.create(
                 username=validated_data['username'],
@@ -56,8 +57,29 @@ class UserLoginSerializer(serializers.Serializer):
         model=User
         fields=['id', 'username','password','name', 'created_at', 'updated_at', 'part', 'team']
 
-    username=serializers.CharField(max_length=32)
-    password=serializers.CharField(max_length=32, write_only=True)
+    part_list = (
+        ('프론트엔드', '프론트엔드'),
+        ('백엔드', '백엔드')
+    )
+
+    team_list = (
+        ('RePick', 'Repick'),
+        ('바리바리', '바리바리'),
+        ('Hooking', 'Hooking'),
+        ('Dansupport', 'Dansupport'),
+        ('TherapEse', 'TherapEse')
+    )
+
+    username = serializers.CharField(max_length=32)  # 아이디
+    password = serializers.CharField(max_length=32, write_only=True)
+    email = serializers.EmailField()
+    name = serializers.CharField(max_length=8)  # 이름
+    part = serializers.ChoiceField(
+        choices=part_list
+    )
+    team = serializers.ChoiceField(
+        choices=team_list
+    )
 
     def validate(self, data):
         username=data.get("username", None)
@@ -72,14 +94,11 @@ class UserLoginSerializer(serializers.Serializer):
             raise serializers.ValidationError("존재하지 않는 유저")
 
 
-        token = RefreshToken.for_user(user=user)
         data = {
             'id': user.id,
             'username':user.username,
             'name' : user.name,
             'part' : user.part,
             'team' : user.team,
-            'refresh_token' : str(token),
-            'access_token' : str(token.access_token)
         }
         return data
