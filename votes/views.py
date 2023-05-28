@@ -14,14 +14,13 @@ class TeamVoteView(APIView):
     def get(self, request, format=None):
         vote = Team_Vote.objects.all()
         serializer = TeamVoteSerializer(vote, many=True)
-        baribari = Team_Vote.objects.filter(team='바리바리').count()
-        repick = Team_Vote.objects.filter(team='RePick').count()
-        hooking = Team_Vote.objects.filter(team='Hooking').count()
-        dansupport = Team_Vote.objects.filter(team='Dansupport').count()
-        therapese = Team_Vote.objects.filter(team='TherapEse').count()
-        return Response({'message': "투표 조회", '바리바리': baribari, 'RePick': repick,
-                         'Hooking': hooking, 'Dansupport':dansupport,
-                         'TherapEse': therapese, 'data': serializer.data}, status=HTTP_200_OK)
+        vote_count = Team_Vote.objects.filter().values('team').annotate(total=Count('team')).order_by('-total')
+        # baribari = Team_Vote.objects.filter(team='바리바리').count()
+        # repick = Team_Vote.objects.filter(team='RePick').count()
+        # hooking = Team_Vote.objects.filter(team='Hooking').count()
+        # dansupport = Team_Vote.objects.filter(team='Dansupport').count()
+        # therapese = Team_Vote.objects.filter(team='TherapEse').count()
+        return Response({'message': "투표 조회", 'vote_count':vote_count, 'data': serializer.data}, status=HTTP_200_OK)
 
     def post(self, request, format=None):
         user = self.request.user
