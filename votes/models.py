@@ -7,7 +7,7 @@ from accounts.models import User
 
 class Team_Vote(models.Model):
     team_list = (
-        ('RePick', 'Repick'),
+        ('RePick', 'RePick'),
         ('바리바리', '바리바리'),
         ('Hooking', 'Hooking'),
         ('Dansupport', 'Dansupport'),
