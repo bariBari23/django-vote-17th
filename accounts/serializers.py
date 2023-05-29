@@ -55,7 +55,7 @@ class UserLoginSerializer(serializers.Serializer):
 
     class Meta:
         model=User
-        fields=['id', 'username','password','name', 'created_at', 'updated_at', 'part', 'team']
+        fields=['id', 'username','password','name', 'created_at', 'updated_at', 'part', 'team','team_vote','part_vote']
 
     part_list = (
         ('프론트엔드', '프론트엔드'),
@@ -80,6 +80,8 @@ class UserLoginSerializer(serializers.Serializer):
     team = serializers.ChoiceField(
         choices=team_list
     )
+    team_vote =serializers.BooleanField(default=False)
+    part_vote = serializers.BooleanField(default=False)
 
     def validate(self, data):
         username=data.get("username", None)
@@ -100,5 +102,7 @@ class UserLoginSerializer(serializers.Serializer):
             'name' : user.name,
             'part' : user.part,
             'team' : user.team,
+            'team_vote' : user.team_vote,
+            'part_vote': user.part_vote,
         }
         return data

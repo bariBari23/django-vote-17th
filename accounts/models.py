@@ -25,6 +25,8 @@ class User(AbstractUser):
     updated_at = models.DateTimeField(auto_now=True)
     part = models.CharField(max_length=8, choices=part_list)
     team = models.CharField(max_length=16, choices=team_list)
+    team_vote = models.BooleanField(default=False)
+    part_vote = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['password', 'name', 'email', 'part', 'team']
