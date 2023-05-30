@@ -23,8 +23,8 @@ class User(AbstractUser):
     email = models.EmailField(unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    part = models.CharField(max_length=8, choices=part_list)
-    team = models.CharField(max_length=16, choices=team_list)
+    part = models.CharField(max_length=8, choices=part_list, default='백엔드')
+    team = models.CharField(max_length=16, choices=team_list, default='바리바리')
     team_vote = models.BooleanField(default=False)
     part_vote = models.BooleanField(default=False)
 
