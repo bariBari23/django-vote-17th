@@ -21,10 +21,7 @@ class SignupView(APIView):
             return Response({'message': '회원가입 성공', 'data': serializer.data}, status=HTTP_200_OK)
         return Response({'message': '회원가입 실패', 'data': serializer.errors}, status=HTTP_400_BAD_REQUEST)
 
-    def get(self, request):
-        users = User.objects.all()
-        serializer = UserSignupSerializer(users, many=True)
-        return Response({'message': '유저 목록 조회 성공', 'data': serializer.data}, status=HTTP_200_OK)
+
 
 
 #로그인 함수
