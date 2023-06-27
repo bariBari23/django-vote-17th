@@ -16,10 +16,7 @@ class TeamVoteView(APIView):
         vote = Team_Vote.objects.all()
         serializer = TeamVoteSerializer(vote, many=True)
         vote_count = Team_Vote.objects.filter().values('team').annotate(total=Count('team')).order_by('-total')
-        user = request.user
-        user_data = get_object_or_404(User, pk=user.id)
-        serializer_user = UserLoginSerializer(user_data)
-        return Response({'message': "투표 조회", 'vote_count':vote_count, 'data': serializer.data, 'user':serializer_user.data}, status=HTTP_200_OK)
+        return Response({'message': "투표 조회", 'vote_count':vote_count, 'data': serializer.data}, status=HTTP_200_OK)
 
     # def post(self, request, format=None):
     #     user = self.request.user
