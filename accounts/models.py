@@ -16,7 +16,7 @@ class User(AbstractUser):
         ('바리바리', '바리바리'),
         ('Hooking', 'Hooking'),
         ('Dansupport', 'Dansupport'),
-        ('TherapEase', 'TherapEase')
+        ('ThearapEase', 'ThearapEase')
     )
 
     name = models.CharField(max_length=8)
