@@ -11,7 +11,7 @@ class Team_Vote(models.Model):
         ('바리바리', '바리바리'),
         ('Hooking', 'Hooking'),
         ('Dansupport', 'Dansupport'),
-        ('ThearapEse', 'ThearapEse')
+        ('TherapEase', 'TherapEase')
     )
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='team_user')
     team = models.CharField(max_length=16, choices=team_list)
