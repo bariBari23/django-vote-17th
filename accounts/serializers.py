@@ -18,7 +18,7 @@ class UserSignupSerializer(serializers.Serializer):
         ('바리바리', '바리바리'),
         ('Hooking', 'Hooking'),
         ('Dansupport', 'Dansupport'),
-        ('TherapEse', 'TherapEse')
+        ('TherapEase', 'TherapEase')
     )
 
     username = serializers.CharField(max_length=32) # 아이디

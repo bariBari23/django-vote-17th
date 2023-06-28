@@ -8,7 +8,7 @@ class TeamVoteSerializer(serializers.ModelSerializer):
         ('바리바리', '바리바리'),
         ('Hooking', 'Hooking'),
         ('Dansupport', 'Dansupport'),
-        ('TherapEse', 'TherapEse')
+        ('TherapEase', 'TherapEase')
     )
 
     team_user = serializers.ReadOnlyField(source='user.name')
