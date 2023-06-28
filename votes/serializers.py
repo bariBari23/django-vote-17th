@@ -56,12 +56,9 @@ class PartVoteSerializer(serializers.ModelSerializer):
     part = serializers.ChoiceField(
         choices=user_list
     )
-    userpart = serializers.SerializerMethodField()
 
-    def get_userpart(self, obj):
-        return obj.user.part
     class Meta:
         model=Part_Vote
-        fields=['id', 'part_user', 'part', 'userpart']
+        fields=['id', 'part_user', 'part']
 
 
