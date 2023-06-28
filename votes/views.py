@@ -68,7 +68,8 @@ class PartVoteView(APIView):
     def get(self, request, format=None):
         vote = Part_Vote.objects.all()
         serializer = PartVoteSerializer(vote, many=True)
-        vote_count = Part_Vote.objects.filter().values('part').annotate(total=Count('part')).order_by('-total')
+        vote_count = Part_Vote.objects.filter().values().annotate(total=Count('part')).order_by('-total')
+
         return Response({'message': "투표 조회", 'vote_count':vote_count, 'data': serializer.data}, status=HTTP_200_OK)
 
     def post(self, request, format=None):
