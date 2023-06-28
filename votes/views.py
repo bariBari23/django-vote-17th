@@ -38,26 +38,38 @@ class TeamVoteView(APIView):
         user = self.request.user
         serializer = TeamVoteSerializer(data=request.data)
         if serializer.is_valid():
-            if Team_Vote.objects.filter(user=user, team=serializer.validated_data['team']):
-                user_update = get_object_or_404(User, name=user.name)
-                user_update.team_vote = False
-                user_update.save()
-                delete_vote = Team_Vote.objects.get(user=user, team=serializer.validated_data['team'])
-                delete_vote.delete()
-                return Response({'message': '투표 취소', 'data': serializer.data, 'user':user_update.team_vote}, status=HTTP_201_CREATED)
+            # if Team_Vote.objects.filter(user=user, team=serializer.validated_data['team']):
+            #     user_update = get_object_or_404(User, name=user.name)
+            #     user_update.team_vote = False
+            #     user_update.save()
+            #     delete_vote = Team_Vote.objects.get(user=user, team=serializer.validated_data['team'])
+            #     delete_vote.delete()
+            #     return Response({'message': '투표 취소', 'data': serializer.data, 'user':user_update.team_vote}, status=HTTP_201_CREATED)
+            # else:
+            #     if user.team == serializer.validated_data['team']:
+            #         return Response({'message': '내 팀은 투표 할 수 없습니다!', 'data': serializer.errors},
+            #                         status=HTTP_400_BAD_REQUEST)
+            #     elif Team_Vote.objects.filter(user=user):
+            #         return Response({'message': '투표는 한 번만!', 'data': serializer.errors},
+            #                         status=HTTP_400_BAD_REQUEST)
+            #     else:
+            #         user_update=get_object_or_404(User, name=user.name)
+            #         user_update.team_vote=True
+            #         user_update.save()
+            #         serializer.save(user=self.request.user, team=serializer.validated_data['team'])
+            #         return Response({'message': '투표 성공', 'data': serializer.data, 'user':user_update.team_vote}, status=HTTP_201_CREATED)
+            if user.team == serializer.validated_data['team']:
+                return Response({'message': '내 팀은 투표 할 수 없습니다!', 'data': serializer.errors},
+                                status=HTTP_400_BAD_REQUEST)
+            elif Team_Vote.objects.filter(user=user):
+                return Response({'message': '투표는 한 번만!', 'data': serializer.errors},
+                                status=HTTP_400_BAD_REQUEST)
             else:
-                if user.team == serializer.validated_data['team']:
-                    return Response({'message': '내 팀은 투표 할 수 없습니다!', 'data': serializer.errors},
-                                    status=HTTP_400_BAD_REQUEST)
-                elif Team_Vote.objects.filter(user=user):
-                    return Response({'message': '투표는 한 번만!', 'data': serializer.errors},
-                                    status=HTTP_400_BAD_REQUEST)
-                else:
-                    user_update=get_object_or_404(User, name=user.name)
-                    user_update.team_vote=True
-                    user_update.save()
-                    serializer.save(user=self.request.user, team=serializer.validated_data['team'])
-                    return Response({'message': '투표 성공', 'data': serializer.data, 'user':user_update.team_vote}, status=HTTP_201_CREATED)
+                user_update=get_object_or_404(User, name=user.name)
+                user_update.team_vote=True
+                user_update.save()
+                serializer.save(user=self.request.user, team=serializer.validated_data['team'])
+                return Response({'message': '투표 성공', 'data': serializer.data, 'user':user_update.team_vote}, status=HTTP_201_CREATED)
         return Response({'message': '투표 실패', 'data': serializer.errors}, status=HTTP_400_BAD_REQUEST)
 
 
