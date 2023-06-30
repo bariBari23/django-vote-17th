@@ -70,8 +70,7 @@ class LogoutView(APIView):
         }, status=status.HTTP_202_ACCEPTED)
         response.delete_cookie('refresh')
         response.delete_cookie('access')
-        token=RefreshToken('refresh')
-        token.blacklist()
+
         return response
 
 
